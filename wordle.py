@@ -17,26 +17,54 @@ def create_window():
     mid_row = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
     bot_row = ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]
 
-    box = ttk.Entry().grid(row=0, column=2)
+    ops = {
+        "A" : "A",
+        "B" : "B",
+        "C" : "C",
+        "D" : "D",
+        "E" : "E",
+        "F" : "F",
+        "G" : "G",
+        "H" : "H",
+        "I" : "I",
+        "J" : "J",
+        "K" : "K",
+        "L" : "L",
+        "M" : "M",
+        "N" : "N",
+        "O" : "O",
+        "P" : "P",
+        "Q" : "Q",
+        "R" : "R",
+        "S" : "S",
+        "T" : "T",
+        "U" : "U",
+        "V" : "V",
+        "W" : "W",
+        "X" : "X",
+        "Y" : "Y",
+        "Z" : "Z",
+        "enter" : "\n",
+        "backspace" : "\b"
+        
+    }
 
-    """def key_press(e):
-        if e.char == "\b":
-            if len(prev_text) > 0:
-                prev_text = prev_text[0:len(prev_text)-1]
-        elif e.char == "\n":
-            pass
+    def key_press(e):
+        if e == "\b":
+            print("\\b")
+        elif e == "\n":
+            print("\\n")
         else:
-            pt += e.char
-            ttk.Label(text=prev_text).grid(column=3, row=0)"""
+            print(e)
 
     for key in range(len(top_row)):
-        ttk.Button(text=top_row[key]).grid(column=key, row=7)
+        ttk.Button(text=top_row[key], command=(lambda c=top_row[key] : key_press(ops[c]))).grid(column=key, row=7)
 
     for key in range(len(mid_row)):
-        ttk.Button(text=mid_row[key]).grid(column=key, row=8)
+        ttk.Button(text=mid_row[key], command=(lambda c=mid_row[key] : key_press(ops[c]))).grid(column=key, row=8)
     
     for key in range(len(bot_row)):
-        ttk.Button(text=bot_row[key]).grid(column=key, row=9)
+        ttk.Button(text=bot_row[key], command=(lambda c = bot_row[key] : key_press(ops[c]))).grid(column=key, row=9)
 
     ttk.Button(text="quit", command=root.destroy).grid(column=0, row=10)
 

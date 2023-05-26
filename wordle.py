@@ -11,8 +11,8 @@ from tkinter import *
 from tkinter import ttk
 
 def create_window():
-    root = Tk()
-    root.geometry("800x500")
+    win = Tk()
+    win.geometry("500x500")
     top_row = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
     mid_row = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
     bot_row = ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]
@@ -55,22 +55,33 @@ def create_window():
         elif e == "\n":
             print("\\n")
         else:
-            print(e)
+            guesses[0].configure(text=e)
 
-    for key in range(len(top_row)):
-        ttk.Button(text=top_row[key], command=(lambda c=top_row[key] : key_press(ops[c]))).grid(column=key, row=7)
+    guesses = [Label(win, text="_ _ _ _ _", font="Times 24") for _ in range(6)]
+    for g in guesses:
+        g.pack()
 
-    for key in range(len(mid_row)):
-        ttk.Button(text=mid_row[key], command=(lambda c=mid_row[key] : key_press(ops[c]))).grid(column=key, row=8)
-    
-    for key in range(len(bot_row)):
-        ttk.Button(text=bot_row[key], command=(lambda c = bot_row[key] : key_press(ops[c]))).grid(column=key, row=9)
+    for i in range(len(top_row)):
+        key = ttk.Button(text=top_row[i], command=(lambda c=top_row[i] : key_press(ops[c])))
+        key.place(anchor=NW, x=50*i, y=300, width=50, height=50)
 
-    ttk.Button(text="quit", command=root.destroy).grid(column=0, row=10)
+    for i in range(len(mid_row)):
+        key = ttk.Button(text=mid_row[i], command=(lambda c=mid_row[i] : key_press(ops[c])))
+        key.place(anchor=NW, x=50*i, y=350, width=50, height=50)
+
+    for i in range(len(bot_row)):
+        key = ttk.Button(text=bot_row[i], command=(lambda c = bot_row[i] : key_press(ops[c])))
+        key.place(anchor=NW, x=50*i, y=400, width=50, height=50)
+
+    key = ttk.Button(text="backspace", command=(lambda c = bot_row[i] : key_press("\b")))
+    key.place(anchor=NW, x=50*i, y=400, width=100, height=50)   
+
+    quit = ttk.Button(text="quit", command=win.destroy)
+    quit.place(anchor=NW, x=450, y=350, width=50, height=50)
 
     #root.bind('<KeyPress>', key_press)
 
-    root.mainloop()
+    win.mainloop()
     
 
 def main():

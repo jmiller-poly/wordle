@@ -13,9 +13,7 @@ from tkinter import ttk
 def create_window():
     win = Tk()
     win.geometry("500x500")
-    top_row = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
-    mid_row = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
-    bot_row = ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]
+    keyboard = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], ["A", "S", "D", "F", "G", "H", "J", "K", "L"], ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]]
 
     ops = {
         "A" : "A",
@@ -50,31 +48,27 @@ def create_window():
     }
 
     def key_press(e):
-        if e == "\b":
+        if e == "backspace":
             print("\\b")
-        elif e == "\n":
+        elif e == "enter":
             print("\\n")
         else:
+            before = guesses[0].cget("text")
             guesses[0].configure(text=e)
 
-    guesses = [Label(win, text="_ _ _ _ _", font="Times 24") for _ in range(6)]
+    guesses = [Label(win, text="", font="Times 24") for _ in range(6)]
     for g in guesses:
+        g.config(bg="black", fg="white")
         g.pack()
 
-    for i in range(len(top_row)):
-        key = ttk.Button(text=top_row[i], command=(lambda c=top_row[i] : key_press(ops[c])))
-        key.place(anchor=NW, x=50*i, y=300, width=50, height=50)
-
-    for i in range(len(mid_row)):
-        key = ttk.Button(text=mid_row[i], command=(lambda c=mid_row[i] : key_press(ops[c])))
-        key.place(anchor=NW, x=50*i, y=350, width=50, height=50)
-
-    for i in range(len(bot_row)):
-        key = ttk.Button(text=bot_row[i], command=(lambda c = bot_row[i] : key_press(ops[c])))
-        key.place(anchor=NW, x=50*i, y=400, width=50, height=50)
-
-    key = ttk.Button(text="backspace", command=(lambda c = bot_row[i] : key_press("\b")))
-    key.place(anchor=NW, x=50*i, y=400, width=100, height=50)   
+    for row in range(len(keyboard)):
+        for ch in range(len(keyboard[row])):
+            if keyboard[row][ch] == "backspace":
+                key = ttk.Button(text=keyboard[row][ch], command=(lambda c=keyboard[row][ch] : key_press(c)))
+                key.place(anchor=NW, x=50*ch, y=300+row*50, width=100, height=50)
+            else:
+                key = ttk.Button(text=keyboard[row][ch], command=(lambda c=keyboard[row][ch] : key_press(c)))
+                key.place(anchor=NW, x=50*ch, y=300+row*50, width=50, height=50)
 
     quit = ttk.Button(text="quit", command=win.destroy)
     quit.place(anchor=NW, x=450, y=350, width=50, height=50)

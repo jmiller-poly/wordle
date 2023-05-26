@@ -11,50 +11,25 @@ from tkinter import *
 from tkinter import ttk
 
 def create_window():
+    global guess_num
     win = Tk()
     win.geometry("500x500")
-    keyboard = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], ["A", "S", "D", "F", "G", "H", "J", "K", "L"], ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]]
+    keyboard = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], 
+                ["A", "S", "D", "F", "G", "H", "J", "K", "L"], 
+                ["enter", "Z", "X", "C", "V", "B", "N", "M", "backspace"]]
 
-    ops = {
-        "A" : "A",
-        "B" : "B",
-        "C" : "C",
-        "D" : "D",
-        "E" : "E",
-        "F" : "F",
-        "G" : "G",
-        "H" : "H",
-        "I" : "I",
-        "J" : "J",
-        "K" : "K",
-        "L" : "L",
-        "M" : "M",
-        "N" : "N",
-        "O" : "O",
-        "P" : "P",
-        "Q" : "Q",
-        "R" : "R",
-        "S" : "S",
-        "T" : "T",
-        "U" : "U",
-        "V" : "V",
-        "W" : "W",
-        "X" : "X",
-        "Y" : "Y",
-        "Z" : "Z",
-        "enter" : "\n",
-        "backspace" : "\b"
-        
-    }
+    guess_num = 0
 
     def key_press(e):
-        if e == "backspace":
-            print("\\b")
-        elif e == "enter":
-            print("\\n")
+        global guess_num
+        before = guesses[guess_num].cget("text")
+        if e == "backspace" or e == "\b":
+            guesses[guess_num].configure(text=before[0:len(before)-1])
+        elif (e == "enter" or e == "\n") and len(before) == 5:
+            guess_num += 1
         else:
-            before = guesses[0].cget("text")
-            guesses[0].configure(text=e)
+            if len(before) < 5:
+                guesses[guess_num].configure(text=before + e)
 
     guesses = [Label(win, text="", font="Times 24") for _ in range(6)]
     for g in guesses:

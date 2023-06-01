@@ -5,7 +5,7 @@ This program attempts to create wordle in python using tkinter
 """
 
 __author__ = "James Miller"
-__version__ = "May 22, 2023"
+__version__ = "May 26, 2023"
 
 from tkinter import *
 from tkinter import ttk
